@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.HashMap;
 
 import info.vividcode.app.sample.jpa.model.data.User;
+import info.vividcode.app.sample.jpa.model.data.User_;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
@@ -35,6 +39,17 @@ public class App {
         List<User> uu = (List<User>) em.createNamedQuery("User.findAll").getResultList();
         System.out.println("--- user list ---");
         for (User u : uu) {
+            System.out.println(" - " + u.getName() + " (id: " + u.getId() + ")");
+        }
+
+        // Criteria API を使って "testuser1" という名前のユーザーの一覧を表示
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> cq = cb.createQuery(User.class);
+        Root<User> r = cq.from(User.class);
+        cq.select(r).where(cb.equal(r.get(User_.name), "testuser1"));
+        List<User> uu2 = em.createQuery(cq).getResultList();
+        System.out.println("--- user list (with name \"testuser1\") ---");
+        for (User u : uu2) {
             System.out.println(" - " + u.getName() + " (id: " + u.getId() + ")");
         }
 
