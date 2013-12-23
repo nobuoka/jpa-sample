@@ -4,7 +4,37 @@ repositories {
     mavenCentral()
 }
 
+def generatedJavaSrcDir = 'gen/main/java'
+def persistencexmlFile = 'src/main/resources/META-INF/persistence.xml'
+sourceSets.main.java.srcDirs += [generatedJavaSrcDir]
+
+configurations {
+    apt {
+        description "for annotation processors"
+    }
+}
+
+def eclipseLinkVer = '2.5.+'
 dependencies {
-    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.5.+'
+    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:' + eclipseLinkVer
+    apt     'org.eclipse.persistence:org.eclipse.persistence.jpa.modelgen.processor:' + eclipseLinkVer
     compile 'org.apache.derby:derby:10.10.+'
 }
+
+task procJava(type: JavaCompile, group: 'build', description: 'Annotation processing') {
+    def aptDestDir = new File(project.projectDir, generatedJavaSrcDir)
+    // Java のソースディレクトリすべてを対象にする (出力先ディレクトリは除く)
+    source = project.sourceSets.main.java.srcDirs.findAll {
+        !it.equals(aptDestDir)
+    }
+
+    def persistencexml = new File(project.projectDir, persistencexmlFile).absolutePath
+    def apOptions = 'eclipselink.persistencexml=' + persistencexml
+
+    classpath = project.configurations.compile
+    options.compilerArgs.addAll '-proc:only', '-implicit:none',
+               '-processorpath', project.configurations.apt.asPath,
+               '-A' + apOptions
+    destinationDir = aptDestDir
+}
+compileJava.dependsOn procJava
