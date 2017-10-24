@@ -1,0 +1,9 @@
+/.gradle/
+
+/.idea/
+*.iml
+
+/*/out/
+
+/jpa_sample.derby/
+derby.log
