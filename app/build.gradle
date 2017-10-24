@@ -9,4 +9,7 @@ repositories {
 
 dependencies {
     compile project(':data-model')
+
+    runtime 'org.apache.derby:derby:10.14.+'
+    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.7.+'
 }

@@ -5,6 +5,5 @@ repositories {
 }
 
 dependencies {
-    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.5.+'
-    compile 'org.apache.derby:derby:10.10.+'
+    compile 'javax.persistence:javax.persistence-api:2.2'
 }
