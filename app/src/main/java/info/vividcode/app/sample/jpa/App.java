@@ -32,7 +32,7 @@ public class App {
         em.getTransaction().commit();
 
         // User クラスで定義された NamedQuery を使って全ユーザーを取得して表示
-        List<User> uu = (List<User>) em.createNamedQuery("User.findAll").getResultList();
+        List<User> uu = em.createNamedQuery("User.findAll", User.class).getResultList();
         System.out.println("--- user list ---");
         for (User u : uu) {
             System.out.println(" - " + u.getName() + " (id: " + u.getId() + ")");
