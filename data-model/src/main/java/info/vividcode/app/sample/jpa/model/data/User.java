@@ -10,17 +10,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="\"user\"")
+@Table(name="user")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="\"id\"")
+    @Column(name="id")
     private long id;
 
-    @Column(name="\"name\"")
+    @Column(name="name")
     private String name;
 
     protected User() {}

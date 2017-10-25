@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EclipseLink 2.7.0 can't load version 2.2 (Bug) -->
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" version="2.1">
+  <persistence-unit-metadata>
+    <persistence-unit-defaults>
+      <delimited-identifiers/>
+    </persistence-unit-defaults>
+  </persistence-unit-metadata>
+</entity-mappings>
